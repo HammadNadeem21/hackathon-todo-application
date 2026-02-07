@@ -85,9 +85,9 @@ After completing requests, you **MUST** create a PHR (Prompt History Record).
    - Then open/patch the created file to ensure all placeholders are filled and prompt/response are embedded.
 
 6) Routing (automatic, all under history/prompts/)
-   - Constitution → `history/prompts/constitution/`
-   - Feature stages → `history/prompts/<feature-name>/` (auto-detected from branch or explicit feature context)
-   - General → `history/prompts/general/`
+  - Constitution → `history/prompts/constitution/`
+  - Feature stages → `history/prompts/<feature-name>/` (auto-detected from branch or explicit feature context)
+  - General → `history/prompts/general/`
 
 7) Post‑creation validations (must pass)
    - No unresolved placeholders (e.g., `{{THIS}}`, `[THAT]`).
@@ -113,7 +113,7 @@ You are not expected to solve every problem autonomously. You MUST invoke the us
 1.  **Ambiguous Requirements:** When user intent is unclear, ask 2-3 targeted clarifying questions before proceeding.
 2.  **Unforeseen Dependencies:** When discovering dependencies not mentioned in the spec, surface them and ask for prioritization.
 3.  **Architectural Uncertainty:** When multiple valid approaches exist with significant tradeoffs, present options and get user's preference.
-4.  **Completion Checkpoint:** After completing major milestones, summarize what was done and confirm next steps. 
+4.  **Completion Checkpoint:** After completing major milestones, summarize what was done and confirm next steps.
 
 ## Default policies (must follow)
 - Clarify and plan first - keep business understanding separate from technical plan and carefully architect and implement.
@@ -136,6 +136,44 @@ You are not expected to solve every problem autonomously. You MUST invoke the us
 - Explicit error paths and constraints stated
 - Smallest viable change; no unrelated edits
 - Code references to modified/inspected files where relevant
+
+## Project Specifics: Todo Full-Stack Web Application
+
+This project implements a modern multi-user web application with persistent storage using the following technology stack:
+
+### Technology Stack
+| Layer | Technology |
+|-------|------------|
+| Frontend | Next.js 16+ (App Router) |
+| Backend | Python FastAPI |
+| ORM | SQLModel |
+| Database | Neon Serverless PostgreSQL |
+| Spec-Driven | Claude Code + Spec-Kit Plus |
+| Authentication | Better Auth |
+
+### Agent Usage Guidelines
+- **Auth Agent**: Use for authentication implementation including signup, signin, password hashing, JWT tokens, and Better Auth integration
+- **Frontend Agent**: Use for frontend development including Next.js pages, components, layouts, styling, and responsive UI implementation
+- **DB Agent**: Use for database design and operations including table creation, migrations, schema design, and Neon Serverless PostgreSQL setup
+- **Backend Agent**: Use for FastAPI development including route generation, request/response handling, API endpoints, and database connectivity
+
+### Development Approach
+We will follow the Agentic Dev Stack workflow: Write spec → Generate plan → Break into tasks → Implement via Claude Code. No manual coding allowed. We will review the process, prompts, and iterations to judge each phase and project.
+
+### Authentication Flow
+Better Auth is configured to issue JWT (JSON Web Token) tokens when users log in. The authentication flow works as follows:
+1. User logs in on Frontend → Better Auth creates a session and issues a JWT token
+2. Frontend makes API call → Includes the JWT token in the Authorization: Bearer <token> header
+3. Backend receives request → Extracts token from header, verifies signature using shared secret
+4. Backend identifies user → Decodes token to get user ID, email, etc. and matches it with the user ID in the URL
+5. Backend filters data → Returns only tasks belonging to that user
+
+### Basic Level Functionality Requirements
+- Implement all 5 Basic Level features as a web application
+- Create RESTful API endpoints
+- Build responsive frontend interface
+- Store data in Neon Serverless PostgreSQL database
+- Authentication – Implement user signup/signin using Better Auth
 
 ## Architect Guidelines (for planning)
 
@@ -208,3 +246,17 @@ Wait for consent; never auto-create ADRs. Group related decisions (stacks, authe
 
 ## Code Standards
 See `.specify/memory/constitution.md` for code quality, testing, performance, security, and architecture principles.
+
+## Active Technologies
+- Python 3.11 (FastAPI backend), JavaScript/TypeScript (Next.js frontend) + Better Auth (frontend authentication), FastAPI (backend framework), SQLModel (ORM), Neon Serverless PostgreSQL (database) (001-auth-jwt-integration)
+- Python 3.11 (FastAPI backend), JavaScript/TypeScript (Next.js frontend) + FastAPI (backend framework), SQLModel (ORM), Neon Serverless PostgreSQL (database), Better Auth with JWT tokens (authentication) (001-backend-api-db)
+- JavaScript/TypeScript (Next.js 16+) + Next.js (App Router), Better Auth, React, Tailwind CSS (001-frontend-ui)
+- Browser storage (localStorage/sessionStorage) for authentication tokens (001-frontend-ui)
+- Python 3.11 (backend), JavaScript/TypeScript (frontend) + Better Auth (frontend authentication), FastAPI (backend framework), SQLModel (ORM), Neon Serverless PostgreSQL (database) (002-auth-debug-recovery)
+- Neon Serverless PostgreSQL database with JWT tokens stored client-side in browser storage (002-auth-debug-recovery)
+- Python 3.11 (backend) + FastAPI (web framework), SQLModel (ORM), Neon Serverless PostgreSQL (database), Better Auth (authentication), Pydantic (data validation) (003-backend-db-recovery)
+- Neon Serverless PostgreSQL with connection pooling optimized for serverless environment (003-backend-db-recovery)
+- JavaScript/TypeScript (Next.js 16+), Python 3.11 + Next.js (App Router), Better Auth, FastAPI, SQLModel, Neon Serverless PostgreSQL (004-frontend-connectivity-recovery)
+
+## Recent Changes
+- 001-auth-jwt-integration: Added Python 3.11 (FastAPI backend), JavaScript/TypeScript (Next.js frontend) + Better Auth (frontend authentication), FastAPI (backend framework), SQLModel (ORM), Neon Serverless PostgreSQL (database)
