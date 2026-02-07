@@ -1,0 +1,79 @@
+# Frontend API Contracts
+# Describes the expected API interactions from the frontend perspective
+
+## Authentication Endpoints (Expected from Backend Spec 01)
+
+### User Registration
+- **Endpoint**: `POST /auth/register`
+- **Request**: `{ "email": "user@example.com", "password": "securepassword" }`
+- **Response**: `{ "success": true, "message": "User registered successfully" }`
+- **Error Response**: `{ "success": false, "message": "Email already registered" }`
+
+### User Login
+- **Endpoint**: `POST /auth/login`
+- **Request**: `{ "email": "user@example.com", "password": "securepassword" }`
+- **Response**: `{ "access_token": "jwt-token-string", "token_type": "bearer" }`
+- **Error Response**: `{ "detail": "Incorrect email or password" }`
+
+### User Logout
+- **Endpoint**: `POST /auth/logout`
+- **Response**: `{ "success": true, "message": "Logged out successfully" }`
+
+## Task Management Endpoints (Expected from Backend Spec 02)
+
+### Get User Tasks
+- **Endpoint**: `GET /tasks`
+- **Authorization**: Bearer token required
+- **Response**: `[{ "id": "uuid", "title": "Task title", "description": "Task description", "completed": false, "user_id": "uuid", "created_at": "timestamp", "updated_at": "timestamp" }]`
+- **Error Response**: `401 Unauthorized` or `404 Not Found`
+
+### Create New Task
+- **Endpoint**: `POST /tasks`
+- **Authorization**: Bearer token required
+- **Request**: `{ "title": "New task", "description": "Task description", "completed": false }`
+- **Response**: `{ "id": "uuid", "title": "New task", "description": "Task description", "completed": false, "user_id": "uuid", "created_at": "timestamp", "updated_at": "timestamp" }`
+- **Error Response**: `401 Unauthorized` or `400 Bad Request`
+
+### Update Task
+- **Endpoint**: `PUT /tasks/{id}`
+- **Authorization**: Bearer token required
+- **Request**: `{ "title": "Updated title", "description": "Updated description", "completed": true }`
+- **Response**: `{ "id": "uuid", "title": "Updated title", "description": "Updated description", "completed": true, "user_id": "uuid", "created_at": "timestamp", "updated_at": "timestamp" }`
+- **Error Response**: `401 Unauthorized`, `403 Forbidden`, or `404 Not Found`
+
+### Delete Task
+- **Endpoint**: `DELETE /tasks/{id}`
+- **Authorization**: Bearer token required
+- **Response**: `204 No Content`
+- **Error Response**: `401 Unauthorized`, `403 Forbidden`, or `404 Not Found`
+
+## Expected Error Responses
+
+### Unauthorized Access
+- **Status Code**: `401 Unauthorized`
+- **Response**: `{ "detail": "Not authenticated" }`
+
+### Forbidden Access
+- **Status Code**: `403 Forbidden`
+- **Response**: `{ "detail": "Access denied - insufficient permissions" }`
+
+### Resource Not Found
+- **Status Code**: `404 Not Found`
+- **Response**: `{ "detail": "Resource not found" }`
+
+### Bad Request
+- **Status Code**: `400 Bad Request`
+- **Response**: `{ "detail": "Invalid request data" }`
+
+## Frontend Component Contracts
+
+### Authentication State Management
+- Components must handle loading, success, and error states
+- Components must redirect unauthenticated users from protected routes
+- Components must handle token expiration gracefully
+
+### Task Management UI Contracts
+- Task list component should accept array of task objects
+- Task item component should handle completion toggle, edit, and delete actions
+- Task form component should handle creation and update operations
+- All components should display appropriate loading and error states

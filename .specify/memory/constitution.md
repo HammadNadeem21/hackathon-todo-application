@@ -1,55 +1,59 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!-- SYNC IMPACT REPORT
+Version change: 1.2.0 → 1.3.0
+Modified principles: API-first design → Spec-driven development, Database schema integrity → Security-first architecture, Type safety → Correctness over speed, RESTful conventions → Clear separation of concerns, Testability → Reproducible development, No authentication in this spec → No manual coding
+Added sections: Key Standards, Technical Constraints, Security Constraints, Development Constraints, Success Criteria
+Removed sections: None
+Templates requiring updates:
+  - .specify/templates/plan-template.md ✅ updated
+  - .specify/templates/spec-template.md ✅ updated
+  - .specify/templates/tasks-template.md ✅ updated
+  - .specify/templates/commands/*.md ⚠ pending
+Follow-up TODOs: None
+-->
+# Todo Full-Stack Web Application Constitution (Hackathon Phase 02)
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### Spec-driven development
+Spec-driven development using the Agentic Dev Stack workflow; All features must be derived directly from written specs; No manual coding; all implementation via Claude Code; Follow spec → plan → tasks → implementation workflow strictly; Each spec must be independently verifiable
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### Security-first architecture
+Security-first architecture with strict user isolation; Authentication required on all API endpoints; Task ownership enforced at every data operation; JWT verification must occur server-side on every request; Database operations must be scoped to authenticated users only; All protected routes require a valid JWT; Requests without or with invalid tokens return 401 Unauthorized; User identity must be derived from JWT, not client input; No cross-user data access under any condition; JWT tokens must have expiration and signature validation
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### Correctness over speed
+Correctness over speed (no feature shortcuts); No undocumented behavior or implicit assumptions; All flows (auth, CRUD, completion) function end-to-end; Project passes functional, security, and spec-compliance review
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### Clear separation of concerns
+Clear separation of frontend, backend, and authentication concerns; Frontend: Next.js 16+ using App Router; Backend: Python FastAPI; Authentication: Better Auth with JWT tokens
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### Reproducible development
+Reproducible, reviewable, and prompt-driven development; All features must be derived directly from written specs; Prompts and iterations are part of the evaluation; All flows (auth, CRUD, completion) function end-to-end
 
-### [PRINCIPLE_6_NAME]
+### No manual coding
+No manual coding; all implementation via Claude Code; REST APIs must follow consistent, documented contracts; Each spec must be independently verifiable; No undocumented behavior or implicit assumptions
 
+## Key Standards
 
-[PRINCIPLE__DESCRIPTION]
+All features must be derived directly from written specs; No manual coding; all implementation via Claude Code; REST APIs must follow consistent, documented contracts; Authentication required on all API endpoints; Task ownership enforced at every data operation; JWT verification must occur server-side on every request; Database operations must be scoped to authenticated users only
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Technical Constraints
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+Frontend: Next.js 16+ using App Router; Backend: Python FastAPI; ORM: SQLModel; Database: Neon Serverless PostgreSQL; Authentication: Better Auth with JWT tokens; Shared secret: BETTER_AUTH_SECRET used by frontend and backend; API format: JSON over HTTP with standard status codes
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+## Security Constraints
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+All protected routes require a valid JWT; Requests without or with invalid tokens return 401 Unauthorized; User identity must be derived from JWT, not client input; No cross-user data access under any condition; JWT tokens must have expiration and signature validation
+
+## Development Constraints
+
+Follow spec → plan → tasks → implementation workflow strictly; Each spec must be independently verifiable; Prompts and iterations are part of the evaluation; No undocumented behavior or implicit assumptions
+
+## Success Criteria
+
+All 5 basic-level features implemented as a web application; Multi-user support with strict data isolation; Fully functional REST API with authentication; Persistent storage using Neon PostgreSQL; Responsive frontend UI integrated with backend APIs; All flows (auth, CRUD, completion) function end-to-end; Project passes functional, security, and spec-compliance review
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+All implementations must follow the Agentic Dev Stack workflow: Write spec → Generate plan → Break into tasks → Implement via Claude Code. No manual coding allowed. All changes must be reviewed for compliance with these principles and architectural decisions.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.3.0 | **Ratified**: 2026-02-04 | **Last Amended**: 2026-02-04
